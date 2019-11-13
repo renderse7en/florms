@@ -16,9 +16,9 @@
             "providers": [
                 "Se7enet\\Florms\\FlormsServiceProvider"
             ],
-            "aliases": [
-                "Se7enet\\Florms\\FlormsFacade"
-            ]
+            "aliases": {
+                "Florm": "Se7enet\\Florms\\FlormsFacade"
+            }
         }
     },
     "license": "MIT",
