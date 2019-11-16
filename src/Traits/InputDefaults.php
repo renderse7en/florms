@@ -3,7 +3,7 @@
 namespace Se7enet\Florms\Traits;
 
 use Illuminate\Support\MessageBag;
-use Se7enet\Florms\FlormsFacade as Florm;
+use Se7enet\Florms\FlormsFacade as Florms;
 
 trait InputDefaults
 {
@@ -224,7 +224,7 @@ trait InputDefaults
      */
     protected function getAttachedModel()
     {
-        $form = Florm::getForm();
+        $form = Florms::getForm();
 
         return $form->getOption('model');
     }
@@ -369,7 +369,7 @@ trait InputDefaults
      */
     public function getDefaultClass()
     {
-        return Florm::getSkinValue('controls.' . $this->getControlType() . '.control');
+        return Florms::getSkinValue('controls.' . $this->getControlType() . '.control');
     }
 
     /**
@@ -435,7 +435,7 @@ trait InputDefaults
             return false;
         }
 
-        $containerClass = Florm::getSkinValue('controls.' . $this->getControlType() . '.container');
+        $containerClass = Florms::getSkinValue('controls.' . $this->getControlType() . '.container');
 
         if (!$containerClass) {
             return false;
@@ -451,7 +451,7 @@ trait InputDefaults
      */
     public function getDefaultInputContainer()
     {
-        $this->inputContainer = Florm::InputContainer()->control($this);
+        $this->inputContainer = Florms::InputContainer()->control($this);
     }
 
     /**
@@ -528,13 +528,13 @@ trait InputDefaults
         $fieldErrors = $allErrors->get($this->getAttribute('name'));
 
         // Get the config setting for how to split up multiple error messages.
-        $split = Florm::getSkinValue('containers.invalidSplit');
+        $split = Florms::getSkinValue('containers.invalidSplit');
 
         // Collapse them all.
         $errors = implode($split, $fieldErrors);
 
         // Get the error class.
-        $errorClass = Florm::getSkinValue('containers.invalid');
+        $errorClass = Florms::getSkinValue('containers.invalid');
 
         // Add the error class to the form group.
         $this->addClass($errorClass);

@@ -4,7 +4,7 @@ namespace Se7enet\Florms\Traits;
 
 use Se7enet\Florms\Elements\Label;
 use Se7enet\Florms\Elements\Element;
-use Se7enet\Florms\FlormsFacade as Florm;
+use Se7enet\Florms\FlormsFacade as Florms;
 use Se7enet\Florms\Elements\Wrappers\HelpText;
 use Se7enet\Florms\Elements\Wrappers\FormGroup;
 use Se7enet\Florms\Elements\Wrappers\InputGroup;
@@ -142,7 +142,7 @@ trait InputCommonOptions
 
         // Otherwise create a new form group.
         else {
-            $this->formGroup = Florm::formGroup()->attributes($options)->control($this);
+            $this->formGroup = Florms::formGroup()->attributes($options)->control($this);
         }
 
         // Chain.
@@ -158,7 +158,7 @@ trait InputCommonOptions
      */
     public function helpText($options = [])
     {
-        $this->helpText = Florm::helpText()->attributes($options)->control($this);
+        $this->helpText = Florms::helpText()->attributes($options)->control($this);
 
         return $this;
     }
@@ -172,7 +172,7 @@ trait InputCommonOptions
      */
     public function inputContainer($options = [])
     {
-        $this->inputContainer = Florm::inputContainer()->attributes($options)->control($this);
+        $this->inputContainer = Florms::inputContainer()->attributes($options)->control($this);
 
         return $this;
     }
@@ -197,7 +197,7 @@ trait InputCommonOptions
         $contents = $this->prepareInputGroupContent($content, $contentOptions);
 
         // Create the append group.
-        $append = Florm::inputGroupAppend($appendOptions)->contents($contents);
+        $append = Florms::inputGroupAppend($appendOptions)->contents($contents);
 
         // Add the append group to the input group.
         $this->inputGroup->append($append);
@@ -226,7 +226,7 @@ trait InputCommonOptions
         $contents = $this->prepareInputGroupContent($content, $contentOptions);
 
         // Create the prepend group.
-        $prepend = Florm::inputGroupPrepend($prependOptions)->contents($contents);
+        $prepend = Florms::inputGroupPrepend($prependOptions)->contents($contents);
 
         // Add the prepend group to the input group.
         $this->inputGroup->prepend($prepend);
@@ -245,7 +245,7 @@ trait InputCommonOptions
     protected function prepareInputGroup($options = [])
     {
         if (!$this->inputGroup) {
-            $this->inputGroup = Florm::inputGroup()->control($this);
+            $this->inputGroup = Florms::inputGroup()->control($this);
         }
 
         $this->inputGroup->attributes($options);
@@ -273,7 +273,7 @@ trait InputCommonOptions
             // If the item is a string, we need to create a new InputGroupText
             // element to hold it.
             if (is_string($item)) {
-                $contents[] = Florm::inputGroupText($options)->content($item);
+                $contents[] = Florms::inputGroupText($options)->content($item);
             }
 
             // If it is an Element, it's fine as-is.
@@ -300,7 +300,7 @@ trait InputCommonOptions
             return;
         }
 
-        $this->label = Florm::label()->content($label)->attributes($options)->control($this);
+        $this->label = Florms::label()->content($label)->attributes($options)->control($this);
 
         return $this;
     }
@@ -314,7 +314,7 @@ trait InputCommonOptions
      */
     public function errorMessages($options = [])
     {
-        $this->errorMessages = Florm::errorMessages()->attributes($options)->control($this);
+        $this->errorMessages = Florms::errorMessages()->attributes($options)->control($this);
 
         return $this;
     }

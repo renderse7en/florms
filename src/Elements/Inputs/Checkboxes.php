@@ -3,7 +3,7 @@
 namespace Se7enet\Florms\Elements\Inputs;
 
 use Se7enet\Florms\Elements\Input;
-use Se7enet\Florms\FlormsFacade as Florm;
+use Se7enet\Florms\FlormsFacade as Florms;
 
 class Checkboxes extends Input
 {
@@ -133,6 +133,6 @@ class Checkboxes extends Input
      */
     public function getOptionElement($options = [])
     {
-        return Florm::checkbox($options);
+        return Florms::checkbox($options);
     }
 }

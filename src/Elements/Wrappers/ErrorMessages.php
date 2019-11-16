@@ -4,7 +4,7 @@ namespace Se7enet\Florms\Elements\Wrappers;
 
 use Se7enet\Florms\Elements\Div;
 use Se7enet\Florms\Traits\WrapperCommon;
-use Se7enet\Florms\FlormsFacade as Florm;
+use Se7enet\Florms\FlormsFacade as Florms;
 use Se7enet\Florms\Traits\HasParentControl;
 
 class ErrorMessages extends Div
@@ -23,6 +23,6 @@ class ErrorMessages extends Div
      */
     public function getDefaultClass()
     {
-        return Florm::getSkinValue('containers.invalidFeedback');
+        return Florms::getSkinValue('containers.invalidFeedback');
     }
 }
