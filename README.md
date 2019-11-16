@@ -4,7 +4,7 @@
 Florms is a Laravel package that enables you to quickly and easily add
 Bootstrap 4 forms to your application. Input elements are automatically wrapped
 in the standard containers (such as `<div class="form-group">`). Labels,
-validation errors, input groups, and other decoration is automatically built
+validation errors, input groups, and other decorators are automatically built
 correctly, so you don't have to think about it. HTML attributes and class 
 options are added via chained methods, and most inputs have sensible defaults,
 so you can quickly and easily knock out your forms and get back to the more
@@ -36,14 +36,14 @@ And add the Facade to the `aliases` array in config/app.php:
 
 You can also optionally publish the config file, if you wish to make any skin customizations:
 ```
-publish config command goes here
+php artisan vendor:publish --provider="Se7enet\Florms\FlormsServiceProvider"
 ```
 
 ## Getting Started
 
 To get started, simply open a new form. Normally this would be done inside a Blade template, but you can store it in a variable if you'd like. Note that because this inherently returns HTML, if you are using it in a Blade, you should use the `{!! ... !!}` to print the unescaped string.
 ```
-{!! Florms::open()->action('/url/to/route.php')->post(); !!}
+{!! Florms::open()->action('/url/to/route.php')->post() !!}
 ```
 This will return the following:
 ```
@@ -61,6 +61,8 @@ And you can use the `put()` or `patch()` or `delete()` methods, instead of `post
 If you want to prepopulate the default values of all fields on your form using an existing model, simply chain the `->model($model)` method onto your form declaration. The model gets attached to the form, and any inputs you create will automatically receive a `value` attribute by looking up the field's `name` from the model attributes.
 
 For example, a `$user` model may have a `$user->first_name` attribute, with a value of "John". If you chain `->model($user)` to your form declaration, and then create a field using `Florms::text()->name('first_name')`, that field will automatically receive `value="John"` attribute.
+
+You can also disable the CSRF token hidden field, by chaining `->csrf(false)`.
 
 ## Adding Form Fields
 
@@ -109,7 +111,7 @@ Most HTML attributes are supported as well, using camel case. Methods chain onto
     ->name('quantity')
     ->id('quantityId')
     ->label('Quantity')
-    ->dataToggle('something')
+    ->data('toggle', 'something')
     ->rel('last')
     ->max(100)
     ->min(0)
