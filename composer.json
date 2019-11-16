@@ -17,14 +17,14 @@
                 "Se7enet\\Florms\\FlormsServiceProvider"
             ],
             "aliases": {
-                "Florm": "Se7enet\\Florms\\FlormsFacade"
+                "Florms": "Se7enet\\Florms\\FlormsFacade"
             }
         }
     },
     "license": "MIT",
     "authors": [
         {
-            "name": "Jamin",
+            "name": "Jamin Blount",
             "email": "jamin@se7enet.com"
         }
     ]
