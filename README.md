@@ -188,7 +188,7 @@ If for some crazy reason you only want to create a plain input field without the
 
 To close your form, after all fields have been created, it's about what you would expect:
 ```
-Florms::close()
+{!! Florms::close() !!}
 ```
 
 By closing your form, it will clear out any model attachments and other options, setting you back to a _tabula rasa_. Once the first form has been cleared out, you can create another form, with another action, another model, and different fields.
