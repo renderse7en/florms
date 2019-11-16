@@ -3,7 +3,7 @@
 namespace Se7enet\Florms\Elements;
 
 use Se7enet\Florms\Traits\HasFormEvents;
-use Se7enet\Florms\FlormsFacade as Florm;
+use Se7enet\Florms\FlormsFacade as Florms;
 
 class Form extends Element
 {
@@ -51,7 +51,7 @@ class Form extends Element
         }
 
         $token = csrf_token();
-        $csrf  = Florm::hidden()->name('_token')->value($token);
+        $csrf  = Florms::hidden()->name('_token')->value($token);
 
         return "\n" . $csrf->render();
     }
@@ -82,7 +82,7 @@ class Form extends Element
         }
 
         $method = $this->getOption('method');
-        $hidden = Florm::hidden()->name('_method')->value($method);
+        $hidden = Florms::hidden()->name('_method')->value($method);
 
         return "\n" . $hidden->render();
     }
@@ -162,7 +162,7 @@ class Form extends Element
      */
     public function getDefaultClass()
     {
-        return Florm::getSkinValue('containers.form');
+        return Florms::getSkinValue('containers.form');
     }
 
     /**

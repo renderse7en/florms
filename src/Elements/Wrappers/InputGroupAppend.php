@@ -4,7 +4,7 @@ namespace Se7enet\Florms\Elements\Wrappers;
 
 use Se7enet\Florms\Elements\Div;
 use Se7enet\Florms\Traits\WrapperCommon;
-use Se7enet\Florms\FlormsFacade as Florm;
+use Se7enet\Florms\FlormsFacade as Florms;
 
 class InputGroupAppend extends Div
 {
@@ -51,6 +51,6 @@ class InputGroupAppend extends Div
      */
     public function getDefaultClass()
     {
-        return Florm::getSkinValue('containers.inputGroupAppend');
+        return Florms::getSkinValue('containers.inputGroupAppend');
     }
 }

@@ -3,7 +3,7 @@
 namespace Se7enet\Florms\Elements;
 
 use Se7enet\Florms\Elements\Legend;
-use Se7enet\Florms\FlormsFacade as Florm;
+use Se7enet\Florms\FlormsFacade as Florms;
 
 class Fieldset extends Element
 {
@@ -58,7 +58,7 @@ class Fieldset extends Element
      */
     public function legend($legend)
     {
-        $this->legend = Florm::legend()->content($legend);
+        $this->legend = Florms::legend()->content($legend);
 
         return $this;
     }

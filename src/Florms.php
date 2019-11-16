@@ -50,7 +50,7 @@ use Se7enet\Florms\Elements\Wrappers\InputGroupText;
 use Se7enet\Florms\Elements\Wrappers\InputGroupAppend;
 use Se7enet\Florms\Elements\Wrappers\InputGroupPrepend;
 
-class Florm
+class Florms
 {
     /**
      * The <form> element for this instance of the Florm Manager. Certain

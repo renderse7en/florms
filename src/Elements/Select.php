@@ -4,7 +4,7 @@ namespace Se7enet\Florms\Elements;
 
 use Se7enet\Florms\Traits\HasFormEvents;
 use Se7enet\Florms\Traits\InputDefaults;
-use Se7enet\Florms\FlormsFacade as Florm;
+use Se7enet\Florms\FlormsFacade as Florms;
 use Se7enet\Florms\Traits\InputCommonOptions;
 use Se7enet\Florms\Traits\InputCommonAttributes;
 
@@ -83,7 +83,7 @@ class Select extends Element
      */
     public function renderOptGroup($label, $content)
     {
-        $optgroup = Florm::optgroup()->control($this)->label($label)->content($content);
+        $optgroup = Florms::optgroup()->control($this)->label($label)->content($content);
 
         return $optgroup->render();
     }
@@ -98,7 +98,7 @@ class Select extends Element
      */
     public function renderOption($value, $content)
     {
-        $option = Florm::option()->control($this)->value($value)->content($content);
+        $option = Florms::option()->control($this)->value($value)->content($content);
 
         return $option->render();
     }

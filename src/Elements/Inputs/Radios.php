@@ -2,7 +2,7 @@
 
 namespace Se7enet\Florms\Elements\Inputs;
 
-use Se7enet\Florms\FlormsFacade as Florm;
+use Se7enet\Florms\FlormsFacade as Florms;
 
 class Radios extends Checkboxes
 {
@@ -15,6 +15,6 @@ class Radios extends Checkboxes
      */
     public function getOptionElement($options = [])
     {
-        return Florm::radio($options);
+        return Florms::radio($options);
     }
 }

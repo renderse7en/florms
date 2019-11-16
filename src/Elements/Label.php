@@ -2,7 +2,7 @@
 
 namespace Se7enet\Florms\Elements;
 
-use Se7enet\Florms\FlormsFacade as Florm;
+use Se7enet\Florms\FlormsFacade as Florms;
 use Se7enet\Florms\Traits\HasParentControl;
 
 class Label extends Element
@@ -96,7 +96,7 @@ class Label extends Element
     {
         $control = $this->getControl();
 
-        return Florm::getSkinValue('controls.' . $control->getControlType() . '.label');
+        return Florms::getSkinValue('controls.' . $control->getControlType() . '.label');
     }
 
     /**

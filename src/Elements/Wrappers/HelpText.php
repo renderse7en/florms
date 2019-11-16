@@ -4,7 +4,7 @@ namespace Se7enet\Florms\Elements\Wrappers;
 
 use Se7enet\Florms\Elements\Small;
 use Se7enet\Florms\Traits\WrapperCommon;
-use Se7enet\Florms\FlormsFacade as Florm;
+use Se7enet\Florms\FlormsFacade as Florms;
 use Se7enet\Florms\Traits\HasParentControl;
 
 class HelpText extends Small
@@ -23,6 +23,6 @@ class HelpText extends Small
      */
     public function getDefaultClass()
     {
-        return Florm::getSkinValue('containers.help');
+        return Florms::getSkinValue('containers.help');
     }
 }

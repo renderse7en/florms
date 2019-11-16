@@ -2,7 +2,7 @@
 
 namespace Se7enet\Florms\Elements\Inputs;
 
-use Se7enet\Florms\FlormsFacade as Florm;
+use Se7enet\Florms\FlormsFacade as Florms;
 
 class Toggles extends Checkboxes
 {
@@ -15,6 +15,6 @@ class Toggles extends Checkboxes
      */
     public function getOptionElement($options = [])
     {
-        return Florm::toggle($options);
+        return Florms::toggle($options);
     }
 }

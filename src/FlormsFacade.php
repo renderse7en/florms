@@ -13,6 +13,6 @@ class FlormsFacade extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'florm';
+        return 'florms';
     }
 }

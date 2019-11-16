@@ -2,7 +2,7 @@
 
 namespace Se7enet\Florms\Elements\Wrappers;
 
-use Se7enet\Florms\FlormsFacade as Florm;
+use Se7enet\Florms\FlormsFacade as Florms;
 
 class InputGroupPrepend extends InputGroupAppend
 {
@@ -14,6 +14,6 @@ class InputGroupPrepend extends InputGroupAppend
      */
     public function getDefaultClass()
     {
-        return Florm::getSkinValue('containers.inputGroupPrepend');
+        return Florms::getSkinValue('containers.inputGroupPrepend');
     }
 }

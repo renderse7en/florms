@@ -13,8 +13,8 @@ class FlormsServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('florm', function ($app) {
-            return new Florm();
+        $this->app->singleton('florms', function ($app) {
+            return new Florms();
         });
 
         $this->mergeConfigFrom(

@@ -4,7 +4,7 @@ namespace Se7enet\Florms\Elements\Wrappers;
 
 use Se7enet\Florms\Elements\Div;
 use Se7enet\Florms\Traits\WrapperCommon;
-use Se7enet\Florms\FlormsFacade as Florm;
+use Se7enet\Florms\FlormsFacade as Florms;
 use Se7enet\Florms\Traits\HasParentControl;
 
 class InputContainer extends Div
@@ -25,6 +25,6 @@ class InputContainer extends Div
     {
         $control = $this->getControl();
 
-        return Florm::getSkinValue('controls.' . $control->getControlType() . '.container');
+        return Florms::getSkinValue('controls.' . $control->getControlType() . '.container');
     }
 }
