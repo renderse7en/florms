@@ -4,7 +4,7 @@
     "type": "library",
     "require": {
         "php": ">=7.1.3",
-        "laravel/framework": "5.8.*"
+        "laravel/framework": "^5.1 || ^6.0"
     },
     "autoload": {
         "psr-4": {
@@ -16,9 +16,9 @@
             "providers": [
                 "Se7enet\\Florms\\FlormsServiceProvider"
             ],
-            "aliases": [
-                "Se7enet\\Florms\\FlormsFacade"
-            ]
+            "aliases": {
+                "Florm": "Se7enet\\Florms\\FlormsFacade"
+            }
         }
     },
     "license": "MIT",
