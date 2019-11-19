@@ -190,7 +190,23 @@ class Form extends Element
     }
 
     /**
-     * Shortcut for $this->action() by generating a URL based on a named route.
+     * Shortcut for $this->url() by generating a URL based on a Controller 
+     * Action.
+     *
+     * @param string $action
+     * @param array $parameters
+     * 
+     * @return $this
+     */
+    public function action($action, $parameters = [])
+    {
+        $url = action($action, $parameters);
+
+        return $this->url($url);
+    }
+
+    /**
+     * Shortcut for $this->url() by generating a URL based on a named route.
      *
      * @param string $route
      * @param array $parameters
@@ -202,7 +218,20 @@ class Form extends Element
     {
         $url = route($route, $parameters, $absolute);
 
-        return $this->action($url);
+        return $this->url($url);
+    }
+
+    /**
+     * The action attribute specifies where to send the form-data when a form is
+     * submitted.
+     *
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function url($url)
+    {
+        return $this->_attribute('action', $url);
     }
 
     /**
@@ -228,19 +257,6 @@ class Form extends Element
     public function acceptCharset($charset = '')
     {
         return $this->_attribute('accept-charset', $charset);
-    }
-
-    /**
-     * The action attribute specifies where to send the form-data when a form is
-     * submitted.
-     *
-     * @param string $url
-     *
-     * @return $this
-     */
-    public function action($url = '')
-    {
-        return $this->_attribute('action', $url);
     }
 
     /**
