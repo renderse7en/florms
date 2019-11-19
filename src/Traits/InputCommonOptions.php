@@ -2,6 +2,7 @@
 
 namespace Se7enet\Florms\Traits;
 
+use Illuminate\Support\Str;
 use Se7enet\Florms\Elements\Label;
 use Se7enet\Florms\Elements\Element;
 use Se7enet\Florms\FlormsFacade as Florms;
@@ -72,6 +73,22 @@ trait InputCommonOptions
     {
         // Lowercase the method name to check against it.
         $check = strtolower($method);
+
+        // Shortcut for data.
+        if (
+            substr($check, 0, 4) == 'data'
+            && strlen($check) > 4
+        ) {
+
+            // Get kebab-case version of the complete method name.
+            $attr = Str::snake(substr($method, 4), '-');
+
+            // Prepend that onto the arguments array.
+            array_unshift($arguments, $attr);
+
+            // And then call the data() method.
+            call_user_func_array([$this, 'data'], $arguments);
+        }
 
         // Passthru to label.
         if (
