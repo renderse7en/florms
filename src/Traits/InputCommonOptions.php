@@ -120,6 +120,30 @@ trait InputCommonOptions
             call_user_func_array([$this->inputGroup, $call], $arguments);
         }
 
+        // Passthru to input group append.
+        if (
+            substr($check, 0, 16) == 'inputgroupappend'
+            && strlen($check) > 16
+            && $this->inputGroup
+            && $this->inputGroup->hasOption('append')
+            && ($append = $this->inputGroup->getOption('append'))
+            && method_exists($append, ($call = substr($method, 16)))
+        ) {
+            call_user_func_array([$append, $call], $arguments);
+        }
+
+        // Passthru to input group prepend.
+        if (
+            substr($check, 0, 17) == 'inputgroupprepend'
+            && strlen($check) > 17
+            && $this->inputGroup
+            && $this->inputGroup->hasOption('prepend')
+            && ($prepend = $this->inputGroup->getOption('prepend'))
+            && method_exists($prepend, ($call = substr($method, 17)))
+        ) {
+            call_user_func_array([$prepend, $call], $arguments);
+        }
+
         // Passthru to input container.
         if (
             substr($check, 0, 14) == 'inputcontainer'
