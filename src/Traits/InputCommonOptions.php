@@ -93,6 +93,7 @@ trait InputCommonOptions
         // Passthru to label.
         if (
             substr($check, 0, 5) == 'label'
+            && strlen($check) > 5
             && $this->label
             && method_exists($this->label, ($call = substr($method, 5)))
         ) {
@@ -102,6 +103,7 @@ trait InputCommonOptions
         // Passthru to form group.
         if (
             substr($check, 0, 9) == 'formgroup'
+            && strlen($check) > 9
             && $this->formGroup
             && method_exists($this->formGroup, ($call = substr($method, 9)))
         ) {
@@ -111,6 +113,7 @@ trait InputCommonOptions
         // Passthru to input group.
         if (
             substr($check, 0, 10) == 'inputgroup'
+            && strlen($check) > 10
             && $this->inputGroup
             && method_exists($this->inputGroup, ($call = substr($method, 10)))
         ) {
@@ -120,6 +123,7 @@ trait InputCommonOptions
         // Passthru to input container.
         if (
             substr($check, 0, 14) == 'inputcontainer'
+            && strlen($check) > 14
             && $this->inputContainer
             && method_exists($this->inputContainer, ($call = substr($method, 14)))
         ) {
@@ -129,6 +133,7 @@ trait InputCommonOptions
         // Passthru to help text.
         if (
             substr($check, 0, 8) == 'helptext'
+            && strlen($check) > 8
             && $this->helpText
             && method_exists($this->helpText, ($call = substr($method, 8)))
         ) {
