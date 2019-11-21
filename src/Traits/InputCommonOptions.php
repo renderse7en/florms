@@ -106,9 +106,9 @@ trait InputCommonOptions
         $passes = [
             'label',
             'formgroup',
-            'inputgroup',
             'inputgroupappend',
             'inputgroupprepend',
+            'inputgroup',
             'inputcontainer',
             'helptext',
         ];
@@ -126,7 +126,7 @@ trait InputCommonOptions
             }
 
             // Input Group Append/Prepend need an extra step here.
-            if (in_array($check, ['inputgroupappend', 'inputgroupprepend'])) {
+            if (in_array($passthru, ['inputgroupappend', 'inputgroupprepend'])) {
                 
                 // Must have an input group.
                 if (!$this->inputGroup) {
@@ -134,12 +134,12 @@ trait InputCommonOptions
                 }
 
                 // It must have the appropriate option.
-                if (!$this->inputGroup->hasOption(substr($check, 10))) {
+                if (!$this->inputGroup->hasOption(substr($passthru, 10))) {
                     continue;
                 }
 
                 // And we must be able to get the appropriate option.
-                if (!($passTo = $this->inputGroup->getOption(substr($check, 10)))) {
+                if (!($passTo = $this->inputGroup->getOption(substr($passthru, 10)))) {
                     continue;
                 }
             }
