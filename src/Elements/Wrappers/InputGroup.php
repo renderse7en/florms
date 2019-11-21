@@ -16,6 +16,20 @@ class InputGroup extends Div
         WrapperCommon;
 
     /**
+     * The InputGroupAppend div.
+     *
+     * @var InputGroupAppend
+     */
+    public $append;
+
+    /**
+     * The InputGroupPrepend div.
+     *
+     * @var InputGroupPrepend
+     */
+    public $prepend;
+
+    /**
      * Add an InputGroupAppend div.
      *
      * @param InputGroupAppend $append
@@ -24,7 +38,7 @@ class InputGroup extends Div
      */
     public function append(InputGroupAppend $append)
     {
-        $this->_option('append', $append);
+        $this->append = $append;
     }
 
     /**
@@ -36,7 +50,7 @@ class InputGroup extends Div
      */
     public function prepend(InputGroupPrepend $prepend)
     {
-        $this->_option('prepend', $prepend);
+        $this->prepend = $prepend;
     }
 
     /**
@@ -48,8 +62,8 @@ class InputGroup extends Div
     {
         $html = parent::renderOpen();
 
-        if ($prepend = $this->getOption('prepend')) {
-            $html .= $prepend->render();
+        if ($this->prepend) {
+            $html .= $this->prepend->render();
         }
 
         return $html;
@@ -64,8 +78,8 @@ class InputGroup extends Div
     {
         $html = '';
 
-        if ($append = $this->getOption('append')) {
-            $html .= $append->render();
+        if ($this->append) {
+            $html .= $this->append->render();
         }
 
         $html .= parent::renderClose();

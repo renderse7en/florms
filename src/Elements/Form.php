@@ -2,6 +2,7 @@
 
 namespace Se7enet\Florms\Elements;
 
+use Illuminate\Database\Eloquent\Model;
 use Se7enet\Florms\Traits\HasFormEvents;
 use Se7enet\Florms\FlormsFacade as Florms;
 
@@ -11,6 +12,36 @@ class Form extends Element
      * Include the traits.
      */
     use HasFormEvents;
+
+    /**
+     * Enable or disable the CSRF token.
+     *
+     * @var boolean
+     */
+    public $csrf;
+
+    /**
+     * The "real" method (e.g. put, patch, or delete), to be rendered as a
+     * hidden input field inside the form.
+     *
+     * @var string
+     */
+    public $hiddenMethod;
+
+    /**
+     * The skin to use when rendering this form.
+     *
+     * @var string
+     */
+    public $skin;
+
+    /**
+     * The model attached to this form, for purposes of inheriting default 
+     * values on input fields.
+     *
+     * @var Model
+     */
+    public $model;
 
     /**
      * Get the HTML tag name.
@@ -63,11 +94,11 @@ class Form extends Element
      */
     public function needsHiddenCSRF()
     {
-        if (!$this->hasOption('csrf')) {
+        if (is_null($this->csrf)) {
             return true;
         }
 
-        return !!$this->getOption('csrf');
+        return !!$this->csrf;
     }
 
     /**
@@ -81,8 +112,7 @@ class Form extends Element
             return '';
         }
 
-        $method = $this->getOption('method');
-        $hidden = Florms::hidden()->name('_method')->value($method);
+        $hidden = Florms::hidden()->name('_method')->value($this->hiddenMethod);
 
         return "\n" . $hidden->render();
     }
@@ -97,7 +127,7 @@ class Form extends Element
     public function needsHiddenMethod($method = null)
     {
         if (is_null($method)) {
-            $method = $this->getOption('method');
+            $method = $this->hiddenMethod;
         }
 
         return in_array(strtoupper($method), ['PUT', 'PATCH', 'DELETE']);
@@ -135,7 +165,7 @@ class Form extends Element
      */
     public function setDefaultSkin()
     {
-        if (!$this->hasOption('skin')) {
+        if (empty($this->skin)) {
             $this->skin('default');
         }
     }
@@ -174,7 +204,9 @@ class Form extends Element
      */
     public function csrf($csrf = true)
     {
-        return $this->_option('csrf', !!$csrf);
+        $this->csrf = !!$csrf;
+        
+        return $this;
     }
 
     /**
@@ -186,7 +218,9 @@ class Form extends Element
      */
     public function model($model = null)
     {
-        return $this->_option('model', $model);
+        $this->model = $model;
+
+        return $this;
     }
 
     /**
@@ -243,7 +277,9 @@ class Form extends Element
      */
     public function skin($skin = 'default')
     {
-        return $this->_option('skin', $skin);
+        $this->skin = $skin;
+
+        return $this;
     }
 
     /**
@@ -323,7 +359,7 @@ class Form extends Element
         if ($this->needsHiddenMethod($method)) {
 
             // Set the option value to the original method.
-            $this->_option('method', $method);
+            $this->hiddenMethod = $method;
 
             // But set the "real" method to POST.
             return $this->post();

@@ -14,6 +14,13 @@ class InputGroupText extends Div
     use WrapperCommon;
 
     /**
+     * The input group's HTML content.
+     *
+     * @var string
+     */
+    public $content;
+
+    /**
      * Add content to the input group.
      *
      * @param string $content
@@ -22,7 +29,9 @@ class InputGroupText extends Div
      */
     public function content($content)
     {
-        return $this->_option('content', $content);
+        $this->content = $content;
+        
+        return $this;
     }
 
     /**
@@ -32,7 +41,7 @@ class InputGroupText extends Div
      */
     public function renderContent()
     {
-        return $this->getOption('content');
+        return $this->content ?? '';
     }
 
     /**

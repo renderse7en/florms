@@ -225,7 +225,7 @@ trait InputDefaults
     {
         $form = Florms::getForm();
 
-        return $form->getOption('model');
+        return $form->model;
     }
 
     /**

@@ -5,6 +5,13 @@ namespace Se7enet\Florms\Traits;
 trait HasParentControl
 {
     /**
+     * The parent control to which this element belongs to.
+     *
+     * @var mixed
+     */
+    public $control;
+
+    /**
      * Set the control to which this label belongs.
      *
      * @param mixed $control
@@ -13,7 +20,9 @@ trait HasParentControl
      */
     public function control($control)
     {
-        return $this->_option('control', $control);
+        $this->control = $control;
+
+        return $this;
     }
 
     /**
@@ -23,6 +32,6 @@ trait HasParentControl
      */
     public function getControl()
     {
-        return $this->getOption('control');
+        return $this->control;
     }
 }

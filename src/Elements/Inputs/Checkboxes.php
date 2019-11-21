@@ -8,6 +8,21 @@ use Se7enet\Florms\FlormsFacade as Florms;
 class Checkboxes extends Input
 {
     /**
+     * Key/value paired array of each checkbox in this group.
+     *
+     * @var array
+     */
+    public $options = [];
+
+    /**
+     * Default parameters/options that will be passed into each individual
+     * checkbox.
+     *
+     * @var array
+     */
+    public $controlDefaults = [];
+
+    /**
      * Populate the list of available options. This should be an array where
      * each key is the "value" attribute of the checkbox, and each value is the
      * label text for the checkbox.
@@ -29,9 +44,10 @@ class Checkboxes extends Input
      */
     public function options($options = [], $defaults = [])
     {
-        $this->_option('controlDefaults', $defaults);
+        $this->options = $options;
+        $this->controlDefaults = $defaults;
 
-        return $this->_option('options', $options);
+        return $this;
     }
 
     /**
@@ -88,7 +104,7 @@ class Checkboxes extends Input
         $html  = '';
         $count = 0;
 
-        foreach ($this->getOption('options') as $value => $label) {
+        foreach ($this->options as $value => $label) {
             $count++;
             $html .= $this->renderOption($value, $label, $count);
         }
@@ -109,7 +125,7 @@ class Checkboxes extends Input
     {
         $id       = $this->getAttribute('id');
         $name     = $this->getAttribute('name');
-        $defaults = $this->getOption('controlDefaults', []);
+        $defaults = $this->controlDefaults ?? [];
 
         $options = array_merge([
             'id'        => sprintf('%s-%s', $id, $count),

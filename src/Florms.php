@@ -88,8 +88,8 @@ class Florms
      */
     public function getSkin()
     {
-        if ($this->form->hasOption('skin')) {
-            return $this->form->getOption('skin');
+        if ($this->form->skin) {
+            return $this->form->skin;
         }
 
         return 'default';
