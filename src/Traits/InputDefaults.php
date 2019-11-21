@@ -15,9 +15,8 @@ trait InputDefaults
      */
     public function renderOpen()
     {
-        // Get the element itself from the standard parent opener. This will
-        // initialize the necessary defaults.
-        $input = parent::renderOpen();
+        // Initialize any necessary defaults.
+        $input = $this->setDefaults();
 
         // Start with an empty string.
         $html = '';
@@ -42,8 +41,8 @@ trait InputDefaults
             $html .= $this->inputGroup->renderOpen();
         }
 
-        // Then open the tag. There is no need to close it.
-        $html .= $input;
+        // Then open the tag.
+        $html .= $this->renderOpenTag();
 
         // Send it all back.
         return $html;
@@ -57,8 +56,8 @@ trait InputDefaults
      */
     public function renderClose()
     {
-        // Start with an empty string.
-        $html = '';
+        // Start with the closing tag, if it is necessary.
+        $html = $this->renderCloseTag();
 
         // Add the input group closer.
         if ($this->inputGroup) {

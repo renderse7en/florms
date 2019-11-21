@@ -2,6 +2,7 @@
 
 namespace Se7enet\Florms\Traits;
 
+use Illuminate\Support\Str;
 use Se7enet\Florms\Elements\Label;
 use Se7enet\Florms\Elements\Element;
 use Se7enet\Florms\FlormsFacade as Florms;
@@ -73,53 +74,94 @@ trait InputCommonOptions
         // Lowercase the method name to check against it.
         $check = strtolower($method);
 
-        // Passthru to label.
-        if (
-            substr($check, 0, 5) == 'label'
-            && $this->label
-            && method_exists($this->label, ($call = substr($method, 5)))
-        ) {
-            call_user_func_array([$this->label, $call], $arguments);
+        // Shortcut for data.
+        if (substr($check, 0, 4) == 'data' && strlen($check) > 4) {
+
+            // Get kebab-case version of the complete method name.
+            $attr = Str::snake(substr($method, 4), '-');
+
+            // Prepend that onto the arguments array.
+            array_unshift($arguments, $attr);
+
+            // And then call the data() method.
+            call_user_func_array([$this, 'data'], $arguments);
+
+            // Quit now.
+            return $this;
         }
 
-        // Passthru to form group.
-        if (
-            substr($check, 0, 9) == 'formgroup'
-            && $this->formGroup
-            && method_exists($this->formGroup, ($call = substr($method, 9)))
-        ) {
-            call_user_func_array([$this->formGroup, $call], $arguments);
-        }
-
-        // Passthru to input group.
-        if (
-            substr($check, 0, 10) == 'inputgroup'
-            && $this->inputGroup
-            && method_exists($this->inputGroup, ($call = substr($method, 10)))
-        ) {
-            call_user_func_array([$this->inputGroup, $call], $arguments);
-        }
-
-        // Passthru to input container.
-        if (
-            substr($check, 0, 14) == 'inputcontainer'
-            && $this->inputContainer
-            && method_exists($this->inputContainer, ($call = substr($method, 14)))
-        ) {
-            call_user_func_array([$this->inputContainer, $call], $arguments);
-        }
-
-        // Passthru to help text.
-        if (
-            substr($check, 0, 8) == 'helptext'
-            && $this->helpText
-            && method_exists($this->helpText, ($call = substr($method, 8)))
-        ) {
-            call_user_func_array([$this->helpText, $call], $arguments);
-        }
+        // Try to passthrough to a child object, of we can.
+        $this->passThrough($method, $arguments);
 
         // Chain.
         return $this;
+    }
+
+    public function passThrough(string $method, array $arguments)
+    {
+        // Lowercase the check value.
+        $check = strtolower($method);
+
+        // Define all possible passthru methods.
+        $passes = [
+            'label',
+            'formgroup',
+            'inputgroup',
+            'inputgroupappend',
+            'inputgroupprepend',
+            'inputcontainer',
+            'helptext',
+        ];
+
+        foreach($passes as $passthru) {
+
+            // Match on length.
+            if (substr($check, 0, strlen($passthru)) != $passthru) {
+                continue;
+            }
+
+            // Must actually have more characters after the matched value.
+            if (strlen($check) == strlen($passthru)) {
+                continue;
+            }
+
+            // Input Group Append/Prepend need an extra step here.
+            if (in_array($check, ['inputgroupappend', 'inputgroupprepend'])) {
+                
+                // Must have an input group.
+                if (!$this->inputGroup) {
+                    continue;
+                }
+
+                // It must have the appropriate option.
+                if (!$this->inputGroup->hasOption(substr($check, 10))) {
+                    continue;
+                }
+
+                // And we must be able to get the appropriate option.
+                if (!($passTo = $this->inputGroup->getOption(substr($check, 10)))) {
+                    continue;
+                }
+            }
+
+            // The checked attribute must be defined on the object.
+            $prop = lcfirst(substr($method, 0, strlen($passthru)));
+            if (empty($passTo) && !($passTo = $this->{$prop})) {
+                continue;
+            }
+
+            // The passthrough object must have the method.
+            if (!method_exists($passTo, ($call = lcfirst(substr($method, strlen($passthru)))))) {
+                continue;
+            }
+
+            // If we've made it this far, call the method on the passthrough
+            // object.
+            call_user_func_array([$passTo, $call], $arguments);
+
+            // Done. Break the loop so we don't keep trying.
+            break;
+        }
     }
 
     /**

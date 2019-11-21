@@ -15,10 +15,8 @@ class Select extends Element
      */
     use HasFormEvents,
         InputCommonAttributes,
-        InputCommonOptions;
-    use InputDefaults {
-        renderClose as renderCloseDefault;
-    }
+        InputCommonOptions,
+        InputDefaults;
 
     /**
      * Get the HTML tag name.
@@ -101,16 +99,5 @@ class Select extends Element
         $option = Florms::option()->control($this)->value($value)->content($content);
 
         return $option->render();
-    }
-
-    /**
-     * Selects are not self-closing like regular inputs, so we need to
-     * actually close the element before doing all the cleanup/container stuff.
-     *
-     * @return string
-     */
-    public function renderClose()
-    {
-        return '</' . $this->getTagName() . '>' . $this->renderCloseDefault();
     }
 }

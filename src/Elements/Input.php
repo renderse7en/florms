@@ -39,6 +39,16 @@ class Input extends Element
     }
 
     /**
+     * The <input> tag is self-closing, it doesn't need a closing tag.
+     *
+     * @return void
+     */
+    public function renderCloseTag()
+    {
+        return '';
+    }
+
+    /**
      * Specifies that the text direction will be submitted. Per HTML spec, the
      * value of this attribute is always "[inputname].dir". This method takes
      * no arguments, and should only be called after the field name has been

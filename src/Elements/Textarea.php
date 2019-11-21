@@ -14,10 +14,8 @@ class Textarea extends Element
      */
     use HasFormEvents,
         InputCommonAttributes,
-        InputCommonOptions;
-    use InputDefaults {
-        renderClose as renderCloseDefault;
-    }
+        InputCommonOptions,
+        InputDefaults;
 
     /**
      * Get the HTML tag name.
@@ -37,16 +35,5 @@ class Textarea extends Element
     public function getControlType()
     {
         return 'text';
-    }
-
-    /**
-     * Textareas are not self-closing like regular inputs, so we need to
-     * actually close the element before doing all the cleanup/container stuff.
-     *
-     * @return string
-     */
-    public function renderClose()
-    {
-        return '</' . $this->getTagName() . '>' . $this->renderCloseDefault();
     }
 }

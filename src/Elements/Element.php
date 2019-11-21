@@ -372,6 +372,16 @@ abstract class Element
     {
         $this->setDefaults();
 
+        return $this->renderOpenTag();
+    }
+
+    /**
+     * Render the tag opener, including all of its attributes.
+     *
+     * @return string
+     */
+    public function renderOpenTag()
+    {
         return '<' . trim($this->getTagName() . ' ' . $this->renderAllAttributes()) . '>';
     }
 
@@ -386,11 +396,21 @@ abstract class Element
     }
 
     /**
-     * Close the tag.
+     * Close the tag, and possibly do other things.
      *
      * @return string
      */
     public function renderClose()
+    {
+        return $this->renderCloseTag();
+    }
+
+    /**
+     * Close the tag.
+     *
+     * @return string
+     */
+    public function renderCloseTag()
     {
         return '</' . $this->getTagName() . '>';
     }
