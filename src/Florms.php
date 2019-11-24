@@ -32,6 +32,7 @@ use Se7enet\Florms\Elements\Inputs\Search;
 use Se7enet\Florms\Elements\Inputs\Select;
 use Se7enet\Florms\Elements\Inputs\Submit;
 use Se7enet\Florms\Elements\Inputs\Toggle;
+use Se7enet\Florms\Elements\Inputs\Buttons;
 use Se7enet\Florms\Elements\Inputs\Toggles;
 use Se7enet\Florms\Elements\Inputs\Checkbox;
 use Se7enet\Florms\Elements\Inputs\Password;
@@ -154,6 +155,18 @@ class Florms
     public function button($options = [])
     {
         return new Button($options);
+    }
+
+    /**
+     * Add a group of related <button> elements.
+     *
+     * @param array $options
+     *
+     * @return Buttons
+     */
+    public function buttons($options = [])
+    {
+        return new Buttons($options);
     }
 
     /**
