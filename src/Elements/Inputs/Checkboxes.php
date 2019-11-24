@@ -2,10 +2,9 @@
 
 namespace Se7enet\Florms\Elements\Inputs;
 
-use Se7enet\Florms\Elements\Input;
 use Se7enet\Florms\FlormsFacade as Florms;
 
-class Checkboxes extends Input
+class Checkboxes extends Inputs
 {
     /**
      * Key/value paired array of each checkbox in this group.
@@ -48,50 +47,6 @@ class Checkboxes extends Input
         $this->controlDefaults = $defaults;
 
         return $this;
-    }
-
-    /**
-     * Open the element and all of the various wrapper pieces that should come
-     * before it. For
-     *
-     * @return string
-     */
-    public function renderOpen()
-    {
-        $input = parent::renderOpen();
-
-        $html = '';
-
-        if ($this->formGroup) {
-            $html .= $this->formGroup->renderOpen();
-        }
-
-        if ($this->label && $this->labelBeforeElement()) {
-            $html .= $this->label->render();
-        }
-
-        return $html;
-    }
-
-    /**
-     * Close the element and all of the various wrapper pieces that should come
-     * after it.
-     *
-     * @return string
-     */
-    public function renderClose()
-    {
-        $html = '';
-
-        if ($this->label && $this->labelAfterElement()) {
-            $html .= $this->label->render();
-        }
-
-        if ($this->formGroup) {
-            $html .= $this->formGroup->renderClose();
-        }
-
-        return $html;
     }
 
     /**
