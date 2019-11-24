@@ -539,6 +539,6 @@ trait InputDefaults
         $this->addClass($errorClass);
 
         // And finally, create the error messages.
-        $this->errorMessages(true, ['content' => $errors]);
+        $this->errorMessages(['content' => $errors]);
     }
 }
