@@ -16,9 +16,9 @@ class Buttons extends Inputs
      */
     public function submit($content = '', $options = [])
     {
-        $this->children[] = Florms::submit($options)->content($content)->formGroup(false);
+        $button = Florms::submit($options)->content($content)->formGroup(false);
 
-        return $this;
+        return $this->addChild($button);
     }
 
     /**
@@ -31,9 +31,9 @@ class Buttons extends Inputs
      */
     public function reset($content = '', $options = [])
     {
-        $this->children[] = Florms::reset($options)->content($content)->formGroup(false);
+        $button = Florms::reset($options)->content($content)->formGroup(false);
 
-        return $this;
+        return $this->addChild($button);
     }
 
     /**
@@ -46,8 +46,8 @@ class Buttons extends Inputs
      */
     public function button($content = '', $options = [])
     {
-        $this->children[] = Florms::button($options)->content($content)->formGroup(false);
+        $button = Florms::button($options)->content($content)->formGroup(false);
 
-        return $this;
+        return $this->addChild($button);
     }
 }
