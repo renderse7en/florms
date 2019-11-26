@@ -15,6 +15,26 @@ class Inputs extends Input
     public $children;
 
     /**
+     * Multi-field groups do not need an ID.
+     *
+     * @return void
+     */
+    public function needsDefaultId()
+    {
+        return false;
+    }
+
+    /**
+     * Multi-field groups do not need a value.
+     *
+     * @return void
+     */
+    public function needsDefaultValue()
+    {
+        return false;
+    }
+
+    /**
      * Open the element and all of the various wrapper pieces that should come
      * before it. For
      *
