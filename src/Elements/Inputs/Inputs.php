@@ -12,7 +12,7 @@ class Inputs extends Input
      *
      * @var Element[]
      */
-    public $children;
+    public $children = [];
 
     /**
      * Multi-field groups do not need an ID.
@@ -32,6 +32,46 @@ class Inputs extends Input
     public function needsDefaultValue()
     {
         return false;
+    }
+
+    /**
+     * Add a new child to this multi-field group.
+     *
+     * @param mixed $child
+     *
+     * @return $this
+     */
+    public function addChild($child)
+    {
+        return $this->appendChild($child);
+    }
+
+    /**
+     * Add a new child to this multi-field group.
+     *
+     * @param mixed $child
+     *
+     * @return $this
+     */
+    public function appendChild($child)
+    {
+        array_push($this->children, $child);
+
+        return $this;
+    }
+
+    /**
+     * Add a new child to the beginning of this multi-field group.
+     *
+     * @param mixed $child
+     *
+     * @return $this
+     */
+    public function prependChild($child)
+    {
+        array_unshift($this->children, $child);
+
+        return $this;
     }
 
     /**
