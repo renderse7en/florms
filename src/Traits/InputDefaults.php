@@ -340,7 +340,7 @@ trait InputDefaults
         $class = $this->getDefaultClass();
 
         if (!empty($class)) {
-            $this->addClass($class);
+            $this->prependClass($class);
         }
     }
 
