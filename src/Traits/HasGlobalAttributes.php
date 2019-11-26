@@ -38,7 +38,31 @@ trait HasGlobalAttributes
      */
     public function addClass($class = '')
     {
+        return $this->appendClass($class);
+    }
+
+    /**
+     * Add another classname onto the element.
+     *
+     * @param string $class
+     *
+     * @return $this
+     */
+    public function appendClass($class = '')
+    {
         return $this->appendAttribute('class', $class);
+    }
+
+    /**
+     * Prepend another classname onto the element.
+     *
+     * @param string $class
+     *
+     * @return $this
+     */
+    public function prependClass($class = '')
+    {
+        return $this->prependAttribute('class', $class);
     }
 
     /**
