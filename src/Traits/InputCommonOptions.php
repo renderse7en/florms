@@ -133,13 +133,16 @@ trait InputCommonOptions
                     continue;
                 }
 
+                // Get the name of the child node.
+                $child = substr($passthru, 10);
+
                 // It must have the appropriate option.
-                if (!$this->inputGroup->hasOption(substr($passthru, 10))) {
+                if (!$this->inputGroup->{$child}) {
                     continue;
                 }
 
                 // And we must be able to get the appropriate option.
-                if (!($passTo = $this->inputGroup->getOption(substr($passthru, 10)))) {
+                if (!($passTo = $this->inputGroup->{$child})) {
                     continue;
                 }
             }

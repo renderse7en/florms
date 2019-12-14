@@ -136,6 +136,12 @@ trait InputDefaults
      */
     protected function needsDefaultValue()
     {
+        // It must at least have a name.
+        if (!$this->hasAttribute('name')) {
+            return false;
+        }
+
+        // Otherwise we check whether it already has a defined value or not.
         return !$this->hasAttribute('value');
     }
 
@@ -149,6 +155,11 @@ trait InputDefaults
     {
         // Get the name of the field.
         $key = $this->getAttribute('name');
+
+        // If the field does not have a name, we cannot inherit a default value.
+        if (empty($key)) {
+            return null;
+        }
 
         // If the field exists in the old data, use that first.
         if ($this->hasKeyInSession($key)) {
@@ -225,7 +236,7 @@ trait InputDefaults
     {
         $form = Florms::getForm();
 
-        return $form->getOption('model');
+        return $form->model;
     }
 
     /**
@@ -329,7 +340,7 @@ trait InputDefaults
         $class = $this->getDefaultClass();
 
         if (!empty($class)) {
-            $this->addClass($class);
+            $this->prependClass($class);
         }
     }
 
@@ -539,6 +550,6 @@ trait InputDefaults
         $this->addClass($errorClass);
 
         // And finally, create the error messages.
-        $this->errorMessages(true, ['content' => $errors]);
+        $this->errorMessages(['content' => $errors]);
     }
 }

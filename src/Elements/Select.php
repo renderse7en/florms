@@ -18,6 +18,20 @@ class Select extends Element
         InputCommonOptions,
         InputDefaults;
 
+        /**
+     * Array of all possible options for the <select> element.
+     *
+     * @var array
+     */
+    public $options = [];
+
+    /**
+     * The value of the option to be preselected.
+     *
+     * @var mixed
+     */
+    public $value;
+
     /**
      * Get the HTML tag name.
      *
@@ -47,7 +61,7 @@ class Select extends Element
     {
         $html = '';
 
-        foreach ($this->getOption('options') as $key => $value) {
+        foreach ($this->options as $key => $value) {
 
             // If the value is also an array (or similar), it indicates that
             // this should be an <optgroup>.

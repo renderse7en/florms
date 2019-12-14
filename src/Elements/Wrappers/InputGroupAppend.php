@@ -14,6 +14,14 @@ class InputGroupAppend extends Div
     use WrapperCommon;
 
     /**
+     * Array of InputGroupText divs, which will constitute the content of this
+     * InputGroupAppend.
+     *
+     * @var InputGroupText[]
+     */
+    public $contents;
+
+    /**
      * Add an array of InputGroupText divs.
      *
      * @param InputGroupText[] $contents
@@ -22,7 +30,9 @@ class InputGroupAppend extends Div
      */
     public function contents($contents)
     {
-        return $this->_option('contents', $contents);
+        $this->contents = $contents;
+        
+        return $this;
     }
 
     /**
@@ -34,7 +44,7 @@ class InputGroupAppend extends Div
     {
         $html = '';
 
-        $contents = $this->getOption('contents');
+        $contents = $this->contents ?? [];
 
         foreach($contents as $content) {
             $html .= $content->render();

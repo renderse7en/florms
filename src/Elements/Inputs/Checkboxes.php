@@ -2,11 +2,25 @@
 
 namespace Se7enet\Florms\Elements\Inputs;
 
-use Se7enet\Florms\Elements\Input;
 use Se7enet\Florms\FlormsFacade as Florms;
 
-class Checkboxes extends Input
+class Checkboxes extends Inputs
 {
+    /**
+     * Key/value paired array of each checkbox in this group.
+     *
+     * @var array
+     */
+    public $options = [];
+
+    /**
+     * Default parameters/options that will be passed into each individual
+     * checkbox.
+     *
+     * @var array
+     */
+    public $controlDefaults = [];
+
     /**
      * Populate the list of available options. This should be an array where
      * each key is the "value" attribute of the checkbox, and each value is the
@@ -29,53 +43,10 @@ class Checkboxes extends Input
      */
     public function options($options = [], $defaults = [])
     {
-        $this->_option('controlDefaults', $defaults);
+        $this->options = $options;
+        $this->controlDefaults = $defaults;
 
-        return $this->_option('options', $options);
-    }
-
-    /**
-     * Open the element and all of the various wrapper pieces that should come
-     * before it. For
-     *
-     * @return string
-     */
-    public function renderOpen()
-    {
-        $input = parent::renderOpen();
-
-        $html = '';
-
-        if ($this->formGroup) {
-            $html .= $this->formGroup->renderOpen();
-        }
-
-        if ($this->label && $this->labelBeforeElement()) {
-            $html .= $this->label->render();
-        }
-
-        return $html;
-    }
-
-    /**
-     * Close the element and all of the various wrapper pieces that should come
-     * after it.
-     *
-     * @return string
-     */
-    public function renderClose()
-    {
-        $html = '';
-
-        if ($this->label && $this->labelAfterElement()) {
-            $html .= $this->label->render();
-        }
-
-        if ($this->formGroup) {
-            $html .= $this->formGroup->renderClose();
-        }
-
-        return $html;
+        return $this;
     }
 
     /**
@@ -88,7 +59,7 @@ class Checkboxes extends Input
         $html  = '';
         $count = 0;
 
-        foreach ($this->getOption('options') as $value => $label) {
+        foreach ($this->options as $value => $label) {
             $count++;
             $html .= $this->renderOption($value, $label, $count);
         }
@@ -109,7 +80,7 @@ class Checkboxes extends Input
     {
         $id       = $this->getAttribute('id');
         $name     = $this->getAttribute('name');
-        $defaults = $this->getOption('controlDefaults', []);
+        $defaults = $this->controlDefaults ?? [];
 
         $options = array_merge([
             'id'        => sprintf('%s-%s', $id, $count),

@@ -31,7 +31,7 @@ class Option extends Element
     {
         $control = $this->getControl();
 
-        $selectValue = $control->getOption('value');
+        $selectValue = $control->value;
         $optionValue = $this->getAttribute('value');
 
         if ((is_array($selectValue) && in_array($optionValue, $selectValue)) || $selectValue == $optionValue) {

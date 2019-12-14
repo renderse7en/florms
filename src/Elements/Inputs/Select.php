@@ -33,7 +33,7 @@ class Select extends SelectElement
      */
     public function options($options = [])
     {
-        $this->_option('options', $options);
+        $this->options = $options;
         
         return $this;
     }
@@ -59,6 +59,8 @@ class Select extends SelectElement
      */
     public function value($value = '')
     {
-        return $this->_option('value', $value);
+        $this->value = $value;
+
+        return $this;
     }
 }
