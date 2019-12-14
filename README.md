@@ -1,11 +1,12 @@
 # Florms
+
 ## Easy Bootstrap Forms for Laravel
 
 Florms is a Laravel package that enables you to quickly and easily add
 Bootstrap 4 forms to your application. Input elements are automatically wrapped
 in the standard containers (such as `<div class="form-group">`). Labels,
 validation errors, input groups, and other decorators are automatically built
-correctly, so you don't have to think about it. HTML attributes and class 
+correctly, so you don't have to think about it. HTML attributes and class
 options are added via chained methods, and most inputs have sensible defaults,
 so you can quickly and easily knock out your forms and get back to the more
 important parts of your application.
@@ -14,99 +15,153 @@ important parts of your application.
 
 To install Florms, require the package with Composer by running the following
 command in your console/terminal:
-```
-composer require "se7enet/florms" 
+
+```sh
+composer require "se7enet/florms"
 ```
 
-If you're using Laravel 5.5 or higher, that should be it, Laravel will automatically discover the Service Provider and 
-Facade as part of the Composer install. 
+If you're using Laravel 5.5 or higher, that should be it, Laravel will automatically discover the Service Provider and
+Facade as part of the Composer install.
+
+### Laravel v5.4 and below
 
 However, if you are on a version lower than 5.5, or if you don't use Auto
 Discovery, you'll need to add these yourself:
 
 Add the Service Provider to the `providers` array in config/app.php:
-```
+
+```php
 Se7enet\Florms\FlormsServiceProvider::class,
 ```
 
 And add the Facade to the `aliases` array in config/app.php:
-```
+
+```php
 'Florms' => Se7enet\Florms\FlormsFacade::class,
 ```
 
+### Optionally Publish Configuration
+
 You can also optionally publish the config file, if you wish to make any skin customizations:
-```
+
+```php
 php artisan vendor:publish --provider="Se7enet\Florms\FlormsServiceProvider"
 ```
 
 ## Getting Started
 
 To get started, simply open a new form. Normally this would be done inside a Blade template, but you can store it in a variable if you'd like. Note that because this inherently returns HTML, if you are using it in a Blade, you should use the `{!! ... !!}` to print the unescaped string.
+
+```php
+{!! Florms::open()->url('/url/to/route.php')->post() !!}
 ```
-{!! Florms::open()->action('/url/to/route.php')->post() !!}
-```
+
 This will return the following:
-```
+
+```html
 <form action="/url/to/route.php" method="post">
 <input type="hidden" name="_token" value="SOMECSRFTOKEN">
 ```
 
-You can also use the `route()` method instead of `action()`, which accepts the same arguments as Laravel's `route()` helper function, and will automatically turn your route name into a complete URL:
-```
+### Additional Routing and HTTP Verbs
+
+You can also use the `route()` or `action()` methods instead of `url()`, which accept the same arguments as Laravel's `route()` and `action()` helper functions, respectively, and will automatically turn your route name or controller action reference into a complete URL:
+
+```php
 {!! Florms::open()->route('route.name', [$model->id], true)->post() !!}
 ```
 
-And you can use the `put()` or `patch()` or `delete()` methods, instead of `post()`, to use those as well. Because HTML doesn't actually support these methods, these will submit the form itself using the `post`, but will automatically add the necessary hidden input so that Laravel knows what to do for routing purposes.
+Additionally, you can use the `get()`, `put()`, `patch()`, or `delete()` methods, instead of `post()`, to submit the form using those methods. Because HTML doesn't actually support the `PUT`, `PATCH`, and `DELETE` verbs, the form will be submitted using the `POST` verb, but will contain the necessary `_method` hidden input so that Laravel knows what to do for routing purposes.
 
-If you want to prepopulate the default values of all fields on your form using an existing model, simply chain the `->model($model)` method onto your form declaration. The model gets attached to the form, and any inputs you create will automatically receive a `value` attribute by looking up the field's `name` from the model attributes.
+### Model Binding
 
-For example, a `$user` model may have a `$user->first_name` attribute, with a value of "John". If you chain `->model($user)` to your form declaration, and then create a field using `Florms::text()->name('first_name')`, that field will automatically receive `value="John"` attribute.
+If you want to prepopulate the default values of all fields on your form using an existing model, simply chain the `model($model)` method onto your form opener. The model gets attached to the form, and any inputs you create will automatically receive a `value` attribute by looking up the field's `name` from the model attributes.
 
-You can also disable the CSRF token hidden field, by chaining `->csrf(false)`.
+For example, a `$user` model may have a `$user->first_name` attribute, with a value of "John". If you chain `model($user)` to your form opener, and then create a field such as `Florms::text()->name('first_name')`, that field will automatically receive `value="John"` attribute.
+
+### Additional Options
+
+You can also disable the CSRF token hidden field, by chaining `csrf(false)`.
 
 ## Adding Form Fields
 
 Once you have opened the form, you can add a new field. For a plain text input, you could do something like the following:
-```
+
+```php
 {!! Florms::text()
     ->name('first_name')
     ->label('First Name') !!}
 ```
 
 That would get you something like this:
-```
+
+```html
 <div class="form-group">
     <label for="first_name">First Name</label>
-    <input type-"text" name="first_name" id="first_name" class="form-control">
+    <input type="text" name="first_name" id="first_name" class="form-control">
 </div>
 ```
 
 As you can see, the field will be automatically wrapped inside a `form-group` div, and the standard Bootstrap classes for labels and inputs will be added for you as well.
 
+### Selects
+
 You can make select boxes, too. By default, selects use Bootstrap's "custom" variation to allow for more styling options.
-```
+
+```php
 {!! Florms::select()
-    ->name('selectname")
+    ->name("selectname")
     ->options([1=>'One', 2=>'Two', 3=>'Three'])
     ->value(2)
     ->label('Label Goes Here') !!}
 ```
+
 And you'll get:
-```
+
+```html
 <div class="form-group">
     <label for="selectname">Label Goes Here</label>
     <select name="selectname" id="selectname" class="custom-select">
         <option value="1">One</option>
         <option value="2" selected>Two</option>
-        <option value="#">Three</option>
+        <option value="3">Three</option>
     </select>
 </div>
 ```
 
+### Checkboxes &amp; Radios
+
+Like selects, checkboxes and radios use Bootstrap's "custom" style as well. The necessary wrappers to use this are handled for you. Florms also knows that labels come _after_ checkboxes and radios, rather than before like most other input types, and that they'll need their own custom class in here.
+
+```php
+{!! Florms::checkbox()
+    ->name('acknowledgement')
+    ->value(1)
+    ->label('I acknowledge this.') !!}
+```
+
+```html
+<div class="form-group">
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" name="acknowledgement" id="acknowledgement" value="1" class="custom-control-input">
+        <label for="acknowledgement" class="custom-control-label">I acknowledge this.</label>
+    </div>
+</div>
+```
+
+### Input Types &amp; Attributes
+
 Basically all `<input type="...">` values are supported by using the appropriate static method call from the `Florms` class (`Florms::number()`, `Florms::date()`, `Florms::color()`, etc.), as well as the additional input-related tags (`Florms::select()` and `Florms::textarea()`, for example).
 
-Most HTML attributes are supported as well, using camel case. Methods chain onto each other and return the main input object, so you can build a complete input field. The `id` attribute will be automatically added based on the field's `name`, but you can override it with your own ID if you'd like. And you can add additional classes before or after the normal Bootstrap `form-control` class by using `appendClass(...)` or `prependClass(...)`.
-```
+Most HTML attributes are supported as well, using camel case. Methods chain onto each other and return the main input object, so you can build a complete input field.
+
+The `id` attribute will be automatically added based on the field's `name`, but you can override it with your own ID if you'd like - as you might expect, you would simply chain the `id('your-id-goes-here')` method onto the field.
+
+And you can add additional classes before or after the normal Bootstrap `form-control` class by using `appendClass(...)` or `prependClass(...)`.
+
+Below you can see a more advanced example using several HTML attributes as we ll as an additional class, all attached to a `number` field type.
+
+```php
 {!! Florms::number()
     ->name('quantity')
     ->id('quantityId')
@@ -118,15 +173,19 @@ Most HTML attributes are supported as well, using camel case. Methods chain onto
     ->step(1)
     ->appendClass('another-class') !!}
 ```
-```
+
+```html
 <div class="form-group">
     <label for="quantityId">
     <input type="number" id="quantityId" name="quantity" data-toggle="something" rel="last" max="100" min="0" step="1" class="form-control another-class">
 </div>
 ```
 
+### Alternative Syntax
+
 Additionally, if it makes more sense for you, you can pass an array of options into the original method call, similar to how Laravel's built-in form builder used to work before it was removed from the framework. When using the array syntax, you should use spinal case rather than camel case. You can create the same field as above by using the following:
-```
+
+```php
 {!! Florms::number([
     'name' => 'quantity',
     'id' => 'quantityId',
@@ -140,36 +199,19 @@ Additionally, if it makes more sense for you, you can pass an array of options i
 ]) !!}
 ```
 
-Like selects, checkboxes and radios use Bootstrap's "custom" style as well. The necessary wrappers to use this are handled for you. Florms also knows that labels come _after_ checkboxes and radios, rather than before like most other input types, and that they'll need their own custom class in here.
-```
-{!! Florms::checkbox()
-    ->name('acknowledgement')
-    ->value(1)
-    ->label('I acknowledge this.') !!}
-```
-```
-<div class="form-group">
-    <div class="custom-control custom-checkbox">
-        <input type="checkbox" name="acknowledgement" id="acknowledgement" value="1" class="custom-control-input">
-        <label for="acknowledgement" class="custom-control-label">I acknowledge this.</label>
-    </div>
-</div>
-```
-
 ## More Options
 
 Input Groups are easy as well, using the `inputGroupAppend()` or `inputGroupPrepend()` methods. Simply pass the text or HTML you'd like to add into the method. You can even use both methods at the same time, and Florms will apply both inside a single outer `input-group` div.
-```
-{!! Florms::number()
-    ->name('price')
-    ->label('Price')
+
+```phpphp
     ->max(999.99)
     ->min(0)
     ->step(0.01)
     ->inputGroupPrepend('$')
     ->inputGroupAppend('.00') !!}
 ```
-```
+
+```html
 <div class="form-group">
     <label for="price">
     <div class="input-group">
@@ -189,7 +231,8 @@ If for some crazy reason you only want to create a plain input field without the
 ## In Closing
 
 To close your form, after all fields have been created, it's about what you would expect:
-```
+
+```php
 {!! Florms::close() !!}
 ```
 
@@ -211,7 +254,7 @@ If you'd like to contribute, I'm open to pull requests. This is my first Laravel
 
 ## License
 
-MIT License
+### MIT License
 
 Copyright (c) 2019 Jamin Blount
 
