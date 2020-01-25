@@ -94,6 +94,12 @@ class Form extends Element
      */
     public function needsHiddenCSRF()
     {
+        // Check if it is disabled in the config.
+        if (!config('florms.csrf')) {
+            return false;
+        }
+
+        // Is it currently null?
         if (is_null($this->csrf)) {
             return true;
         }
