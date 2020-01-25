@@ -210,13 +210,22 @@ trait InputCommonOptions
     /**
      * Add the input container wrapper around this element.
      *
-     * @param array   $options
+     * @param array|boolean   $options
      *
      * @return $this
      */
     public function inputContainer($options = [])
     {
+        // If boolean false is passed, we want to disable the input container
+        // wrapper altogether.
+        if ($options === false) {
+            $this->inputContainer = false;
+        }
+        
+        // Otherwise create the wrapper and pass the options into it.
+        else {
         $this->inputContainer = Florms::inputContainer()->attributes($options)->control($this);
+        }
 
         return $this;
     }
