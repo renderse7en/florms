@@ -204,7 +204,4 @@ return [
             ],
         ],
     ],
-
-    'skin'  => 'default',
-
 ];
