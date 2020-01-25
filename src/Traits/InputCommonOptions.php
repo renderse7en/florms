@@ -349,12 +349,20 @@ trait InputCommonOptions
      */
     public function label($label = '', $options = [])
     {
-        if (empty($label)) {
-            return;
+        // Disable auto label, if boolean false is passed.
+        if ($label === false) {
+            $this->label = false;
         }
 
+        // Just do nothing if an empty-ish value is passed.
+        if (empty($label)) {
+            return $this;
+        }
+
+        // Create the label.
         $this->label = Florms::label()->content($label)->attributes($options)->control($this);
 
+        // Done.
         return $this;
     }
 
