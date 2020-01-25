@@ -419,7 +419,7 @@ trait InputDefaults
      */
     public function getDefaultFormGroup()
     {
-        $this->formGroup(true);
+        $this->formGroup();
     }
 
     /**
