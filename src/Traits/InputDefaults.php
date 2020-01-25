@@ -315,15 +315,6 @@ trait InputDefaults
             $id = preg_replace($arrayPattern, $key, $id);
         }
 
-        // Then, replace any other special characters with dashes.
-        $specialPattern = '/[^A-Za-z0-9\-]/';
-        $id = preg_replace($specialPattern, '-', $id);
-
-        // It must start with a letter, so snip anything off the beginning that
-        // isn't a letter.
-        $startPattern = '/^[^A-Za-z]/';
-        $id = preg_replace($startPattern, '', $id);
-
         // That's all, folks.
         return $id;
     }
