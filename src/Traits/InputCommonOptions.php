@@ -224,9 +224,9 @@ trait InputCommonOptions
         
         // Otherwise create the wrapper and pass the options into it.
         else {
-        $this->inputContainer = Florms::inputContainer()->attributes($options)->control($this);
+            $this->inputContainer = Florms::inputContainer()->attributes($options)->control($this);
         }
-
+        
         return $this;
     }
 
@@ -369,14 +369,23 @@ trait InputCommonOptions
     /**
      * Add the error messages block for this element.
      *
-     * @param array   $options
+     * @param array|boolean   $options
      *
      * @return $this
      */
     public function errorMessages($options = [])
     {
-        $this->errorMessages = Florms::errorMessages()->attributes($options)->control($this);
+        // If boolean false is passed, we want to disable the error messages
+        // container altogether.
+        if ($options === false) {
+            $this->errorMessages = false;
+        }
 
+        // Otherwise create the container and pass the options into it.
+        else {
+            $this->errorMessages = Florms::errorMessages()->attributes($options)->control($this);
+        }
+        
         return $this;
     }
 }
