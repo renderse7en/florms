@@ -163,20 +163,25 @@ trait InputDefaults
             return null;
         }
 
-        // If the field exists in the old data, use that first.
-        if ($this->hasKeyInSession($key)) {
-            return $this->getDefaultValueFromSession($key);
-        }
+        // Only do this if the old input inheritance is enabled in the config.
+        if (config('florms.session')) {
 
-        // If *any* data exists in the session - that is, if the form has
-        // already been submitted - then we need to quit trying to get a default
-        // value. If we kept going, it could result in a user legitimately
-        // trying to clear out the contents of a field, and that value getting
-        // repopulated from the original model value, if the form ended up
-        // having validation errors and sending them back. So if we have any
-        // session data at all, and we're still here, just quit now.
-        if (session()->hasOldInput()) {
-            return null;
+            // If the field exists in the old data, use that first.
+            if ($this->hasKeyInSession($key)) {
+                return $this->getDefaultValueFromSession($key);
+            }
+
+            // If *any* data exists in the session - that is, if the form has
+            // already been submitted - then we need to quit trying to get a 
+            // default value. If we kept going, it could result in a user 
+            // legitimately trying to clear out the contents of a field, and 
+            // that value getting repopulated from the original model value, if
+            // the form ended up having validation errors and sending them back.
+            // So if we have any session data at all, and we're still here, just
+            // quit now.
+            if (session()->hasOldInput()) {
+                return null;
+            }
         }
 
         // If we've made it this far, then no form was submitted previously, so
@@ -429,7 +434,7 @@ trait InputDefaults
 
     /**
      * Decide whether we need to generate a default input container div.
-     *
+     * 
      * @return boolean
      */
     public function needsDefaultInputContainer()
