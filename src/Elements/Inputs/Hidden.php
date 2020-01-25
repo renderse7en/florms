@@ -37,4 +37,15 @@ class Hidden extends Input
     {
         return false;
     }
+
+    /**
+     * The hidden input type is, obviously, invisible, so it does not need a
+     * label.
+     *
+     * @return boolean
+     */
+    public function needsDefaultLabel()
+    {
+        return false;
+    }
 }
