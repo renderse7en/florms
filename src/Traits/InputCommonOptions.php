@@ -170,18 +170,17 @@ trait InputCommonOptions
     /**
      * Add (or disable) a form group wrapper around this element.
      *
-     * @param boolean $enabled
-     * @param array   $options
+     * @param array|boolean   $options
      *
      * @return $this
      */
-    public function formGroup($enabled = true, $options = [])
+    public function formGroup($options = [])
     {
         // If boolean false is passed, we want to disable the form group
         // altogether. This is useful for things like checkbox groups, where
         // the overall group gets a form group but the individual options
         // should not.
-        if ($enabled === false) {
+        if ($options === false) {
             $this->formGroup = false;
         }
 
