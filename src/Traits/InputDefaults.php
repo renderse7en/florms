@@ -2,6 +2,7 @@
 
 namespace Se7enet\Florms\Traits;
 
+use Str;
 use Illuminate\Support\MessageBag;
 use Se7enet\Florms\FlormsFacade as Florms;
 
@@ -107,6 +108,7 @@ trait InputDefaults
         $this->setDefaultValue();
         $this->setDefaultClass();
         $this->setDefaultFormGroup();
+        $this->setDefaultLabel();
         $this->setDefaultInputContainer();
         $this->setDefaultErrorMessages();
     }
@@ -462,6 +464,78 @@ trait InputDefaults
     public function getDefaultInputContainer()
     {
         $this->inputContainer = Florms::InputContainer()->control($this);
+    }
+
+    /**
+     * Create a default form group div, if necessary.
+     *
+     * @return void
+     */
+    public function setDefaultLabel()
+    {
+        if (!$this->needsDefaultLabel()) {
+            return;
+        }
+
+        $this->getDefaultLabel();
+    }
+
+    /**
+     * Decide whether we need to generate a default form group div.
+     *
+     * @return boolean
+     */
+    public function needsDefaultLabel()
+    {
+        // Check if it is disabled in the config.
+        if (!config('florms.labels')) {
+            return false;
+        }
+
+        // The field must at least have a name.
+        if (!$this->hasAttribute('name')) {
+            return false;
+        }
+        
+        // The label class attribute must not be set to hard false.
+        if ($this->label === false) {
+            return false;
+        }
+        
+        // Otherwise check to see if it's already been defined.
+        return !$this->label;
+    }
+
+    /**
+     * Build the default form group div.
+     *
+     * @return void
+     */
+    public function getDefaultLabel()
+    {
+        // Start with the field name.
+        $label = $this->getAttribute('name');
+
+        // If this is an array field (e.g., a multi-option select, or a range
+        // of checkboxes, as determined by [] or [something] at the end of the
+        // field name), then we need to change stuff up a bit.
+
+        // Try to match the array brackets syntax, and capture any key that has
+        // been specified.
+        $arrayPattern = '/\[(?<key>[^\]])*\]/';
+        if (preg_match($arrayPattern, $label, $match)) {
+
+            // If they did specify a key, we'll use that as the automatic label.
+            if ($match && !empty($match['key'])) {
+                $label = $match['key'];
+            }
+        }
+
+        // Convert it to Title Case
+        $label = Str::title(str_replace('_', ' ', Str::snake($label)));
+        
+        // Create a Label out of it.
+        $this->label($label);
     }
 
     /**
