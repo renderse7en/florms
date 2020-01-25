@@ -201,8 +201,6 @@ return [
                 // Default class for text appearing inside the prepend/append
                 // div in an input-group.
                 'inputGroupText'    => 'input-group-text',
-                'valid'             => 'is-valid',
-                'validFeedback'     => 'valid-feedback',
             ],
         ],
     ],
