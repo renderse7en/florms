@@ -196,7 +196,7 @@ trait InputCommonOptions
 
         // Nope.
         return false;
-        }
+    }
 
     /**
      * Add (or disable) a form group wrapper around this element.
@@ -418,6 +418,20 @@ trait InputCommonOptions
             $this->errorMessages = Florms::errorMessages()->attributes($options)->control($this);
         }
         
+        return $this;
+    }
+
+    /**
+     * Disable the automatic form-group, label, and error messages blocks.
+     *
+     * @return $this
+     */
+    public function plain()
+    {
+        $this->formGroup(false);
+        $this->label(false);
+        $this->errorMessages(false);
+
         return $this;
     }
 }
