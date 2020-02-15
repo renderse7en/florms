@@ -76,7 +76,12 @@ abstract class Element
      */
     public function __toString()
     {
-        return $this->render();
+        try {
+            $render = $this->render();
+        } catch (\Exception $e) {
+            dd($e);
+        }
+        return $render;
     }
 
     /**
