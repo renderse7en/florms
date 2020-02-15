@@ -227,13 +227,14 @@ trait InputCommonOptions
     /**
      * Add a help text block for this element.
      *
+     * @param string  $text
      * @param array   $options
      *
      * @return $this
      */
-    public function helpText($options = [])
+    public function helpText($text = '', $options = [])
     {
-        $this->helpText = Florms::helpText()->attributes($options)->control($this);
+        $this->helpText = Florms::helpText()->content($text)->attributes($options)->control($this);
 
         return $this;
     }
