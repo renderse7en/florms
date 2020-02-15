@@ -97,7 +97,38 @@ trait InputCommonOptions
         return $this;
     }
 
+    /**
+     * Pass a given option to one of the wrapper elements.
+     *
+     * @param string $method
+     * @param array $arguments
+     * 
+     * @return $this
+     */
     public function passThrough(string $method, array $arguments)
+    {
+        // Check to make sure we can passthrough first.
+        if ($result = $this->canPassThrough($method, $arguments)) {
+
+            // Break out the results into variables.
+            list($passTo, $call, $arguments) = $result;
+
+            // And then call the passthrough method.
+            call_user_func_array([$passTo, $call], $arguments);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Determine whether a given option can be passed to a wrapper element.
+     *
+     * @param string $method
+     * @param array $arguments
+     * 
+     * @return boolean
+     */
+    public function canPassThrough(string $method, array $arguments)
     {
         // Lowercase the check value.
         $check = strtolower($method);
