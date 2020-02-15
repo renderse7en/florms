@@ -189,14 +189,14 @@ trait InputCommonOptions
                 continue;
             }
 
-            // If we've made it this far, call the method on the passthrough
-            // object.
-            call_user_func_array([$passTo, $call], $arguments);
-
-            // Done. Break the loop so we don't keep trying.
-            break;
+            // If we've made it this far, we're good, so return the array of
+            // necessary pieces to perform the passthrough.
+            return [$passTo, $call, $arguments];
         }
-    }
+
+        // Nope.
+        return false;
+        }
 
     /**
      * Add (or disable) a form group wrapper around this element.
