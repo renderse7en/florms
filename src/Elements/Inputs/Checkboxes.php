@@ -22,28 +22,44 @@ class Checkboxes extends Inputs
     public $controlDefaults = [];
 
     /**
-     * Populate the list of available options. This should be an array where
-     * each key is the "value" attribute of the checkbox, and each value is the
-     * label text for the checkbox.
+     * Populate the list of available options. The most basic $options argument
+     * should be a a simple associative array where each key is the "value" 
+     * attribute of the checkbox, and each value is the label text for the 
+     * checkbox.
      *
-     * You can optionally provide an array of default parameters/options that
-     * will be passed into each individual checkbox. Note that the "name" and
-     * "id" options will be automatically inherited from the values already
-     * passed into this group; and the "value" and "label" options will come
-     * from the $options array; and finally, "formGroup" will be disabled,
-     * since the overall checkbox group should get the form group but the
-     * individual checkboxes themselves should not. If you provide any of these
-     * values in the $defaults array, your values will take precedence over what
-     * would have been automatically populated.
+     * A more advanced version should be a 2D array, where each primary key is
+     * again the attribute of the checkbox, and each value is itself an
+     * associative array of the options to be passed into that checkbox. If the
+     * advanced version is used, you must pass a [...'label' => 'Label Text'...]
+     * element to set the label text for that checkbox.
      *
      * @param array $options
-     * @param array $defaults
      *
      * @return $this
      */
-    public function options($options = [], $defaults = [])
+    public function options($options = [])
     {
         $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * An array of default parameters/options that will be passed into each 
+     * individual checkbox control. Note that the "name" and "id" options will 
+     * be automatically inherited from the values already passed into this 
+     * group; and the "value" and "label" options will come from the $options
+     * array; and finally, "formGroup" will be disabled, since the overall 
+     * checkbox group should get the form group but the individual checkboxes 
+     * themselves should not. If you provide any of these values in the 
+     * $defaults array, your values will take precedence over what would have 
+     * been automatically populated.
+     *
+     * @param array $defaults
+     * @return void
+     */
+    public function defaults($defaults = [])
+    {
         $this->controlDefaults = $defaults;
 
         return $this;
