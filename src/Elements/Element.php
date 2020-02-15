@@ -151,10 +151,17 @@ abstract class Element
         // alphanumeric characters from the key when searching for the method.
         $method = preg_replace('/[^A-Za-z0-9]/', '', $key);
 
+        // If the method absolutely exists, just call it.
         if (method_exists($this, $method)) {
             return $this->{$method}($value);
         }
 
+        // Try to passthrough, as well.
+        if (method_exists($this, 'canPassThrough') && $this->canPassThrough($method, [$value])) {
+            return $this->passThrough($method, [$value]);
+        }
+
+        // If all else fails, just set the attribute directly.
         return $this->_attribute($key, $value);
     }
 
