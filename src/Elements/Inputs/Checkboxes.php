@@ -28,7 +28,7 @@ class Checkboxes extends Inputs
      * checkbox.
      * 
      * A more advanced version should be a 2D array, where each primary key is
-     * again the attribute of the checkbox, and each value is itself an
+     * again the `value` attribute of the checkbox, and each value is itself an
      * associative array of the options to be passed into that checkbox. If the
      * advanced version is used, you must pass a [...'label' => 'Label Text'...]
      * element to set the label text for that checkbox.
