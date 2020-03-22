@@ -90,7 +90,7 @@ trait HasFormEvents
 
     /**
      * Fires when the user writes something in a search field (for
-     * <input="search">)
+     * <input type="search">)
      *
      * @param string $script
      *
