@@ -44,6 +44,14 @@ class Form extends Element
     public $model;
 
     /**
+     * Enable or disable populating fields with old input flashed into the
+     * session.
+     *
+     * @var boolean
+     */
+    public $session;
+
+    /**
      * Get the HTML tag name.
      *
      * @return string
@@ -94,6 +102,12 @@ class Form extends Element
      */
     public function needsHiddenCSRF()
     {
+        // Check if it is disabled in the config.
+        if (!config('florms.csrf')) {
+            return false;
+        }
+
+        // Is it currently null?
         if (is_null($this->csrf)) {
             return true;
         }
@@ -278,6 +292,21 @@ class Form extends Element
     public function skin($skin = 'default')
     {
         $this->skin = $skin;
+
+        return $this;
+    }
+
+    /**
+     * Enable or disable default values from the old input flashed onto the
+     * session.
+     *
+     * @param boolean $session
+     * 
+     * @return $this
+     */
+    public function session($session = true)
+    {
+        $this->session = $session;
 
         return $this;
     }

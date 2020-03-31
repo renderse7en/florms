@@ -97,7 +97,38 @@ trait InputCommonOptions
         return $this;
     }
 
+    /**
+     * Pass a given option to one of the wrapper elements.
+     *
+     * @param string $method
+     * @param array $arguments
+     * 
+     * @return $this
+     */
     public function passThrough(string $method, array $arguments)
+    {
+        // Check to make sure we can passthrough first.
+        if ($result = $this->canPassThrough($method, $arguments)) {
+
+            // Break out the results into variables.
+            list($passTo, $call, $arguments) = $result;
+
+            // And then call the passthrough method.
+            call_user_func_array([$passTo, $call], $arguments);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Determine whether a given option can be passed to a wrapper element.
+     *
+     * @param string $method
+     * @param array $arguments
+     * 
+     * @return boolean
+     */
+    public function canPassThrough(string $method, array $arguments)
     {
         // Lowercase the check value.
         $check = strtolower($method);
@@ -158,30 +189,29 @@ trait InputCommonOptions
                 continue;
             }
 
-            // If we've made it this far, call the method on the passthrough
-            // object.
-            call_user_func_array([$passTo, $call], $arguments);
-
-            // Done. Break the loop so we don't keep trying.
-            break;
+            // If we've made it this far, we're good, so return the array of
+            // necessary pieces to perform the passthrough.
+            return [$passTo, $call, $arguments];
         }
+
+        // Nope.
+        return false;
     }
 
     /**
      * Add (or disable) a form group wrapper around this element.
      *
-     * @param boolean $enabled
-     * @param array   $options
+     * @param array|boolean   $options
      *
      * @return $this
      */
-    public function formGroup($enabled = true, $options = [])
+    public function formGroup($options = [])
     {
         // If boolean false is passed, we want to disable the form group
         // altogether. This is useful for things like checkbox groups, where
         // the overall group gets a form group but the individual options
         // should not.
-        if ($enabled === false) {
+        if ($options === false) {
             $this->formGroup = false;
         }
 
@@ -197,13 +227,14 @@ trait InputCommonOptions
     /**
      * Add a help text block for this element.
      *
+     * @param string  $text
      * @param array   $options
      *
      * @return $this
      */
-    public function helpText($options = [])
+    public function helpText($text = '', $options = [])
     {
-        $this->helpText = Florms::helpText()->attributes($options)->control($this);
+        $this->helpText = Florms::helpText()->content($text)->attributes($options)->control($this);
 
         return $this;
     }
@@ -211,14 +242,23 @@ trait InputCommonOptions
     /**
      * Add the input container wrapper around this element.
      *
-     * @param array   $options
+     * @param array|boolean   $options
      *
      * @return $this
      */
     public function inputContainer($options = [])
     {
-        $this->inputContainer = Florms::inputContainer()->attributes($options)->control($this);
-
+        // If boolean false is passed, we want to disable the input container
+        // wrapper altogether.
+        if ($options === false) {
+            $this->inputContainer = false;
+        }
+        
+        // Otherwise create the wrapper and pass the options into it.
+        else {
+            $this->inputContainer = Florms::inputContainer()->attributes($options)->control($this);
+        }
+        
         return $this;
     }
 
@@ -341,25 +381,56 @@ trait InputCommonOptions
      */
     public function label($label = '', $options = [])
     {
-        if (empty($label)) {
-            return;
+        // Disable auto label, if boolean false is passed.
+        if ($label === false) {
+            $this->label = false;
         }
 
+        // Just do nothing if an empty-ish value is passed.
+        if (empty($label)) {
+            return $this;
+        }
+
+        // Create the label.
         $this->label = Florms::label()->content($label)->attributes($options)->control($this);
 
+        // Done.
         return $this;
     }
 
     /**
      * Add the error messages block for this element.
      *
-     * @param array   $options
+     * @param array|boolean   $options
      *
      * @return $this
      */
     public function errorMessages($options = [])
     {
-        $this->errorMessages = Florms::errorMessages()->attributes($options)->control($this);
+        // If boolean false is passed, we want to disable the error messages
+        // container altogether.
+        if ($options === false) {
+            $this->errorMessages = false;
+        }
+
+        // Otherwise create the container and pass the options into it.
+        else {
+            $this->errorMessages = Florms::errorMessages()->attributes($options)->control($this);
+        }
+        
+        return $this;
+    }
+
+    /**
+     * Disable the automatic form-group, label, and error messages blocks.
+     *
+     * @return $this
+     */
+    public function plain()
+    {
+        $this->formGroup(false);
+        $this->label(false);
+        $this->errorMessages(false);
 
         return $this;
     }
