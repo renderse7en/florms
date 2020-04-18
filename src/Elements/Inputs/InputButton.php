@@ -25,4 +25,14 @@ class InputButton extends Input
     {
         return 'button';
     }
+
+    /**
+     * Buttons do not need a label.
+     *
+     * @return void
+     */
+    public function needsDefaultLabel()
+    {
+        return false;
+    }
 }
