@@ -3,14 +3,14 @@
 namespace Se7enet\Florms\Elements\Inputs;
 
 use Se7enet\Florms\Elements\Button;
-use Se7enet\Florms\Traits\InputSubmitImage;
+use Se7enet\Florms\Traits\InputTypeSubmitImage;
 
 class Submit extends Button
 {
     /**
      * Include the traits.
      */
-    use InputSubmitImage;
+    use InputTypeSubmitImage;
 
     /**
      * Constructor.
