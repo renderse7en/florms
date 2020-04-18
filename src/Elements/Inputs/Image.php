@@ -3,14 +3,14 @@
 namespace Se7enet\Florms\Elements\Inputs;
 
 use Se7enet\Florms\Elements\Input;
-use Se7enet\Florms\Traits\InputSubmitImage;
+use Se7enet\Florms\Traits\InputTypeSubmitImage;
 
 class Image extends Input
 {
     /**
      * Include the traits.
      */
-    use InputSubmitImage;
+    use InputTypeSubmitImage;
 
     /**
      * Constructor.

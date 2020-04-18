@@ -2,7 +2,7 @@
 
 namespace Se7enet\Florms\Traits;
 
-trait InputSubmitImage
+trait InputTypeSubmitImage
 {
     /**
      * Specifies the URL of the file that will process the input control when
