@@ -459,7 +459,7 @@ trait InputDefaults
      */
     public function getDefaultInputContainer()
     {
-        $this->inputContainer = Florms::InputContainer()->control($this);
+        $this->inputContainer = Florms::inputContainer()->control($this);
     }
 
     /**
