@@ -36,4 +36,24 @@ class Button extends Element
     {
         return 'button';
     }
+
+    /**
+     * Buttons do not need a value.
+     *
+     * @return void
+     */
+    public function needsDefaultValue()
+    {
+        return false;
+    }
+
+    /**
+     * Buttons do not need a label.
+     *
+     * @return void
+     */
+    public function needsDefaultLabel()
+    {
+        return false;
+    }
 }

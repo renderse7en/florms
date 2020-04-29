@@ -17,26 +17,6 @@ class Button extends ButtonElement
     }
 
     /**
-     * Buttons do not need a value.
-     *
-     * @return void
-     */
-    public function needsDefaultValue()
-    {
-        return false;
-    }
-
-    /**
-     * Buttons do not need a label.
-     *
-     * @return void
-     */
-    public function needsDefaultLabel()
-    {
-        return false;
-    }
-
-    /**
      * Specifies the type <button> element to display
      *
      * @param string $type  Allowed values are:
