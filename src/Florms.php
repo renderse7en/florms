@@ -79,6 +79,11 @@ class Florms
      */
     public function getForm()
     {
+        // If no form has been defined, create one.
+        if (empty($this->form)) {
+            Florms::open();
+        }
+        
         return $this->form;
     }
 
@@ -89,8 +94,8 @@ class Florms
      */
     public function getSkin()
     {
-        if ($this->form->skin) {
-            return $this->form->skin;
+        if ($skin = $this->getForm()->skin) {
+            return $skin;
         }
 
         return 'default';
@@ -138,7 +143,7 @@ class Florms
      */
     public function renderClose()
     {
-        $form = $this->form;
+        $form = $this->getForm();
 
         $this->clear();
 
