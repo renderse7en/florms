@@ -56,4 +56,14 @@ class Button extends Element
     {
         return false;
     }
+
+    /**
+     * Buttons do not need error messages.
+     *
+     * @return void
+     */
+    public function needsDefaultErrorMessages()
+    {
+        return false;
+    }
 }
