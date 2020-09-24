@@ -99,6 +99,9 @@ class Checkboxes extends Inputs
         $name     = $this->getAttribute('name');
         $defaults = $this->controlDefaults ?? [];
 
+        // Remove any array syntax from the ID.
+        $id = $this->fixArraySyntax($id, true);
+
         // If $label is an array, then we should use that for the base $options.
         $options = [];
         if (is_array($label)) {
