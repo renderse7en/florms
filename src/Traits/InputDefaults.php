@@ -560,6 +560,11 @@ trait InputDefaults
             if ($match && !empty($match['key'])) {
                 $label = $match['key'];
             }
+
+            // Otherwise just remove the array brackets entirely.
+            else {
+                $label = preg_replace($arrayPattern, '', $label);
+            }
         }
 
         // Convert it to Title Case
