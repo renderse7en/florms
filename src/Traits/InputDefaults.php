@@ -73,6 +73,11 @@ trait InputDefaults
         // Add the input container closer.
         if ($this->inputContainer) {
 
+            // Help text goes inside the container.
+            if ($this->helpText) {
+                $html .= $this->helpText->render();
+            }
+
             // Error messages go inside the container.
             if ($this->errorMessages) {
                 $html .= $this->errorMessages->render();
@@ -80,6 +85,11 @@ trait InputDefaults
 
             // Container closer.
             $html .= $this->inputContainer->renderClose();
+        }
+
+        // Add the help text, if we haven't already done so.
+        if ($this->helpText && !$this->inputContainer) {
+            $html .= $this->helpText->render();
         }
 
         // Add the errors, if we haven't already done so.
