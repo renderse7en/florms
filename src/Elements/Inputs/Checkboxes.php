@@ -95,7 +95,7 @@ class Checkboxes extends Inputs
     public function renderOption($value, $label, $count = 0)
     {
         // Inherit the default settings.
-        $id       = $this->getAttribute('id');
+        $id       = $this->getAttribute('id') ?: $this->getAttribute('name');
         $name     = $this->getAttribute('name');
         $defaults = $this->controlDefaults ?? [];
 
