@@ -306,13 +306,38 @@ trait InputDefaults
         // Start with the field name.
         $id = $this->getAttribute('name');
 
+        // Clean it.
+        $id = $this->fixArraySyntax($id);
+
+        // That's all, folks.
+        return $id;
+    }
+
+    /**
+     * Get a clean ID from a given string by, e.g., stripping or converting any
+     * array syntax.
+     *
+     * @param string  $id
+     * @param boolean $strip
+     * 
+     * @return string
+     */
+    protected function fixArraySyntax($id = '', $strip = false)
+    {
+        // Define the array pattern.
+        $arrayPattern = '/\[(?<key>[^\]])*\]/';
+
+        // If we are stripping it entirely, let's just do that.
+        if ($strip) {
+            return preg_replace($arrayPattern, '', $id);
+        }
+
         // If this is an array field (e.g., a multi-option select, or a range
         // of checkboxes, as determined by [] or [something] at the end of the
         // field name), then we need to append some stuff.
 
         // First, try to match the array brackets syntax, and capture any key
         // that has been specified.
-        $arrayPattern = '/\[(?<key>[^\]])*\]/';
         if (preg_match($arrayPattern, $id, $match)) {
 
             // Did they specify a key?
